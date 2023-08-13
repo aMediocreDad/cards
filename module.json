@@ -1,0 +1,27 @@
+{
+	"id": "cards",
+	"title": "Cards",
+	"version": "0.1.0",
+	"compatibility": {
+		"minimum": "11",
+		"verified": "11"
+	},
+	"relationships": {
+		"requires": [
+			{
+				"id": "orcnog-card-viewer",
+				"type": "module",
+				"compatibility": {}
+			}
+		]
+	},
+	"authors": [
+		{
+			"name": "aMediocerDad",
+			"flags": {}
+		}
+	],
+	"esmodules": ["index.js"],
+	"styles": ["index.css"],
+	"download": "https://raw.githubusercontent.com/aMediocreDad/cards/main/cards.zip"
+}

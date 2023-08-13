@@ -1,0 +1,20 @@
+{
+	"name": "cards",
+	"private": true,
+	"module": "index.js",
+	"devDependencies": {
+		"@types/jquery": "^3.5.16",
+		"bun": "^0.7.2",
+		"bun-types": "latest",
+		"esbuild": "^0.18.18",
+		"esbuild-svelte": "^0.7.4",
+		"svelte": "^4.1.2",
+		"svelte-preprocess": "^5.0.4",
+		"typescript": "5.1.6"
+	},
+	"type": "module",
+	"scripts": {
+		"dev": "bun ./scripts/build.ts --watch",
+		"build": "bun ./scripts/build.ts"
+	}
+}
