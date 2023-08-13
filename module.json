@@ -23,5 +23,5 @@
 	],
 	"esmodules": ["index.js"],
 	"styles": ["index.css"],
-	"download": "https://raw.githubusercontent.com/aMediocreDad/cards/main/cards.zip"
+	"download": "https://github.com/aMediocreDad/cards/raw/main/cards.zip"
 }
