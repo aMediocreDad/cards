@@ -1,7 +1,7 @@
 {
 	"id": "cards",
 	"title": "Cards",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"compatibility": {
 		"minimum": "11",
 		"verified": "11"
@@ -23,5 +23,6 @@
 	],
 	"esmodules": ["index.js"],
 	"styles": ["index.css"],
-	"download": "https://github.com/aMediocreDad/cards/raw/main/cards.zip"
+	"manifest": "https://github.com/aMediocreDad/cards/releases/latest/download/manifest.json",
+	"download": "https://github.com/aMediocreDad/cards/releases/latest/download/cards.zip"
 }
