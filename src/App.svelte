@@ -1,17 +1,49 @@
-<script>
-	import { slide } from "svelte/transition";
+<script lang="ts">
+	import { backIn, backOut } from "svelte/easing";
+	import { Writable } from "svelte/store";
+	import { TransitionConfig, slide } from "svelte/transition";
+	import { Card } from "./types";
 
-	const hands = game.cards.contents
-		.filter((c) => {
-			return c.type === "hand" && !c.limited;
-		})
-		.flatMap((c) => Array.from(c.cards));
+	export let hands: Writable<Card[]>;
 
-	const displayCard = (card) => {
+	function displayCard(card: Card) {
 		OrcnogFancyCardDealer({
 			deckName: card.origin.name,
 		}).view(card._id, false, false, false);
-	};
+	}
+
+	async function removeCard(card: Card) {
+		const ok = await Dialog.wait({
+			title: "Remove card",
+			content: `Are you sure you want to remove ${card.name} from ${card.origin.name}?`,
+			buttons: [
+				{
+					label: "Yes",
+					value: true,
+				},
+				{
+					label: "No",
+					value: false,
+				},
+			],
+		});
+		if (ok) card.parent.pass(card.source, [card._id]);
+	}
+
+	function spin(_node: Element, options: TransitionConfig & { times?: number } = {}) {
+		const { times = 1 } = options;
+		return {
+			...options,
+			// The value of t passed to the css method
+			// varies between zero and one during an "in" transition
+			// and between one and zero during an "out" transition.
+			css(t: number) {
+				// Svelte takes care of applying the easing function.
+				const degrees = 360 * times; // through which to spin
+				return `transform: rotate3d(0,1,0,${t * degrees}deg);`;
+			},
+		};
+	}
 
 	let open = true;
 </script>
@@ -33,8 +65,17 @@
 				axis: "y",
 			}}
 		>
-			{#each hands as card}
-				<button type="button" on:click={() => displayCard(card)}><img src={card.img} alt={card.name} /></button>
+			{#each $hands as card}
+				<button
+					in:spin={{ easing: backOut, duration: 1500 }}
+					out:spin={{ easing: backIn, duration: 500 }}
+					type="button"
+					on:click={() => displayCard(card)}
+					on:contextmenu={(e) => {
+						e.preventDefault();
+						removeCard(card);
+					}}><img src={card.img} alt={card.name} /></button
+				>
 			{/each}
 		</div>
 	{/if}
@@ -68,11 +109,13 @@
 		background: none;
 		line-height: 0;
 		width: 42px;
+		box-shadow: 0px 0px 0px 0px transparent;
+		transition: box-shadow 0.2s ease-in-out;
 	}
 
 	.app button:hover {
 		cursor: pointer;
-		box-shadow: 1px 1px 4px var(--color-border-dark);
+		box-shadow: 0px 0px 5px 2px var(--color-shadow-primary);
 	}
 
 	.app div {
